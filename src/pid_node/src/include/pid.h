@@ -19,46 +19,30 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <mavros_msgs/AttitudeTarget.h>
 
-// #include "pid.cc"
-
-/* PID IMPLEMENTATION  */
-// void loop(float sp) 
-// { 
-//     // e = sp - pose.pose.position.z; 
-
-//     // u = u_1 + 
-//     //     ( constants.KP + (constants.KD / constants.TS))*e + 
-//     //     (-constants.KP - (2*constants.KD/constants.TS))*e_1 + 
-//     //     (constants.KD/constants.TS)*e_2; 
-    
-//     // if ( u > 1 ) att.thrust = 1.0; 
-//     // else if ( u < 0 ) att.thrust = 0.0; 
-//     // else att.thrust = u;  
-
-//     // // Updating variables 
-//     // u_1 = u; 
-//     // e_2 = e_1; 
-//     // e_1 = e; 
-// }
-
 /* PID gain values and sampling time*/
 struct pid_opts { 
-    double  KP=1.0,
+    double  KP=1.2,
             KI=1.0, //unused for now
-            KD=1.5;
-    double TS = 1/90.0; 
+            KD=2.5;
+    double TS = 1/120.0; 
 } options; 
  
+/**
+ * @brief Pid class implementation
+ * 
+ * @todo add interface documentation for functions (nmm109)
+ */
 class PID 
 { 
 public:
     PID( const geometry_msgs::PoseStamped&,
             mavros_msgs::AttitudeTarget&,
             const pid_opts &opts = options);
-    void loop(geometry_msgs::PoseStamped&);  
+    void loop(const geometry_msgs::PoseStamped&);  
     double samplingTime(); 
 
 private: 
+    // priv variable to write to ros bag
     double u, u_1;  
     double e, e_1, e_2; 
     pid_opts opts; 

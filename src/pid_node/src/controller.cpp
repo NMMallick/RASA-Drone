@@ -55,7 +55,6 @@ int main(int argc, char **argv) {
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
             ("mavros/set_mode");
 
-    
     //the setpoint publishing rate MUST be faster than 2Hz
     double ts = pid.samplingTime(); 
     ros::Rate rate(1/ts);

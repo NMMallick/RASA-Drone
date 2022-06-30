@@ -25,10 +25,14 @@ double PID::samplingTime()
     return opts.TS; 
 }
 
-void PID::loop(geometry_msgs::PoseStamped& sp)
+//
+// TODO(nmm109): Reference equation link...
+//
+void PID::loop(const geometry_msgs::PoseStamped& sp)
 {
     // ROS_INFO("Setpoint height is : %f", sp.pose.position.z); 
-    e = sp.pose.position.z - (*pose).pose.position.z; 
+    e = sp.pose.position.z - (*pose).pose.position.z ; 
+    
     ROS_INFO("Error: %f", e); 
 
     u = u_1 + 
